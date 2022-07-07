@@ -3,7 +3,7 @@
 
 以下为测试过的核心依赖版本：  
 mirai-core: 2.12.0    
-mirai-console: 2.12.0
+mirai-console: 2.12.0    
 Mirai Console Loader version 2.1.0-71ec418
 
 # 网易云点歌  
