@@ -1,0 +1,36 @@
+package top.nicelee.mirai.miramira.handler.groupmsg;
+
+import java.util.function.Consumer;
+
+import net.mamoe.mirai.event.events.GroupMessageEvent;
+import net.mamoe.mirai.message.data.FlashImage;
+import net.mamoe.mirai.message.data.MessageChainBuilder;
+import net.mamoe.mirai.message.data.SingleMessage;
+import top.nicelee.mirai.miramira.RobotConfig;
+
+/**
+ * 闪照 回复 正常照片
+ *
+ */
+@AGroupMsgHandler
+public class FlashMsgHandler implements Consumer<GroupMessageEvent> {
+
+	@Override
+	public void accept(GroupMessageEvent f) {
+		if (!RobotConfig.enableFlash2NormalPicFunc) {
+			return;
+		}
+		for (SingleMessage sm : f.getMessage()) {
+			if(sm instanceof FlashImage) {
+				FlashImage flash = (FlashImage)sm;
+				f.getGroup().sendMessage(new MessageChainBuilder()
+						.append(f.getSender().getNameCard())
+						.append(" 的闪照:\n")
+						.append(flash.getImage())
+						.build()
+				);
+			}
+		}
+	}
+
+}

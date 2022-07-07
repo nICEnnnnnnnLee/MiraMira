@@ -1,4 +1,5 @@
 enableMusicFunc: true
+enableFlash2NormalPicFunc: true
 checkWhite: false
 checkBlack: true
 superadmins:

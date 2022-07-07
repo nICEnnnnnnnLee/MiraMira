@@ -18,6 +18,8 @@ import top.nicelee.mirai.miramira.util.PermissionUil;
  * 
  * /miramira save 保存当前配置
  * 
+ * /miramira flashPicReply [on|off] 开关闪照变正常照片功能
+ * 
  * /miramira whitelist [on|off] 开关白名单检测
  * 
  * /miramira whitelist add [g群号|fQQ号] 添加白名单
@@ -46,6 +48,7 @@ public final class MiraMiraCommand extends JCompositeCommand {
 				"/miramira help|h 查询帮助\r\n" 
 				+ "/miramira status|st 查看状态\r\n"
 				+ "/miramira save|s 保存当前配置\r\n"
+				+ "/miramira flashPicReply|fpr [on|off] 开关闪照变正常照片功能\r\n"
 				+ "/miramira whitelist|w [on|off] 开关白名单检测\r\n"
 				+ "/miramira whitelist|w add [g群号|fQQ号] 添加白名单\r\n"
 				+ "/miramira whitelist|w delete [g群号|fQQ号] 从白名单去掉\r\n"
@@ -82,6 +85,30 @@ public final class MiraMiraCommand extends JCompositeCommand {
 		sender.sendMessage("已保存配置");
 	}
 
+	/**
+	 * /miramira flashPicReply|fpr [on|off] 开关闪照变正常照片功能
+	 * @param sender
+	 * @param flag	on|off
+	 */
+	@SubCommand({"flashPicReply", "fpr"})
+	@Description("开关闪照变正常照片功能")
+	public void enableFlash2NormalPicFunc(CommandSender sender, String flag) {
+		// 权限判断
+		if (!PermissionUil.isAdmin(sender)) {
+			PermissionUil.replyWithNoAuth(sender);
+			return;
+		}
+		if ("on".equalsIgnoreCase(flag)) {
+			RobotConfig.enableFlash2NormalPicFunc = true;
+			sender.sendMessage("回复闪照检测已开启");
+		} else if ("off".equalsIgnoreCase(flag)) {
+			RobotConfig.enableFlash2NormalPicFunc = false;
+			sender.sendMessage("回复闪照检测已关闭");
+		} else {
+			sender.sendMessage("/miramira flashPicReply|fpr " + flag + " 无法解析");
+		}
+	}
+	
 	/**
 	 * /miramira whitelist [on|off] 开关白名单检测
 	 * @param sender
