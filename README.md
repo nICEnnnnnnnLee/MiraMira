@@ -2,8 +2,9 @@
 目前支持网易云点歌、jrrp今日人品测试。  
 
 以下为测试过的核心依赖版本：  
-mirai-core: 2.1.0    
+mirai-core: 2.12.0    
 mirai-console: 2.12.0
+Mirai Console Loader version 2.1.0-71ec418
 
 # 网易云点歌  
 支持黑白名单功能。点歌间隔为1分钟。    
