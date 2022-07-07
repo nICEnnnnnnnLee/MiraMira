@@ -1,0 +1,13 @@
+enableMusicFunc: true
+checkWhite: false
+checkBlack: true
+superadmins:
+  - q10000  # 表示QQ 10000
+  
+whitelist:
+  - f10000  # 表示QQ 10000
+  - g10001  # 表示QQ群 10001
+  
+blacklist:
+  - f10002  # 表示QQ 10002
+  - g10003  # 表示QQ群 10003
