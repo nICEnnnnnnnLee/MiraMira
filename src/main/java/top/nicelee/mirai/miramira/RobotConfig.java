@@ -16,7 +16,7 @@ import io.ktor.util.collections.ConcurrentSet;
 import kotlinx.coroutines.debug.internal.ConcurrentWeakMap;
 import net.mamoe.mirai.utils.MiraiLogger;
 import net.mamoe.yamlkt.Yaml;
-import top.nicelee.mirai.miramira.app.music.Music;
+import top.nicelee.mirai.miramira.app.music.libs.Music;
 
 public class RobotConfig {
 
@@ -34,8 +34,10 @@ public class RobotConfig {
 
 	@Config(description="是否开启点歌功能")
 	public static boolean enableMusicFunc;
+	@Config(description="是否开启Jrrp功能")
+	public static boolean enableJrrpFunc;
 	@Config(description="是否开启闪照变正常功能")
-	public static boolean enableFlash2NormalPicFunc=true;
+	public static boolean enableFlash2NormalPicFunc;
 	@Config(description="是否开启动图添加文字功能")
 	public static boolean enableTxt2GifFunc=true;
 	@Config(description="是否开启白名单校验, 开启后只有在白名单里才能校验通过")
@@ -54,6 +56,7 @@ public class RobotConfig {
 	public static String status() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("enableMusicFunc: ").append(enableMusicFunc).append("\n");
+		sb.append("enableJrrpFunc: ").append(enableJrrpFunc).append("\n");
 		sb.append("enableFlash2NormalPicFunc: ").append(enableMusicFunc).append("\n");
 		sb.append("enableTxt2GifFunc: ").append(enableTxt2GifFunc).append("\n");
 		sb.append("checkWhite: ").append(checkWhite).append("\n");

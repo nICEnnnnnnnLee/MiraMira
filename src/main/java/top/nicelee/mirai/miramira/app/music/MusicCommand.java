@@ -1,10 +1,11 @@
-package top.nicelee.mirai.miramira.command;
+package top.nicelee.mirai.miramira.app.music;
 
 import net.mamoe.mirai.console.command.CommandSender;
 import net.mamoe.mirai.console.command.java.JSimpleCommand;
 import net.mamoe.mirai.console.permission.Permission;
 import top.nicelee.mirai.miramira.Main;
 import top.nicelee.mirai.miramira.RobotConfig;
+import top.nicelee.mirai.miramira.command.ACommand;
 import top.nicelee.mirai.miramira.util.PermissionUil;
 
 /**

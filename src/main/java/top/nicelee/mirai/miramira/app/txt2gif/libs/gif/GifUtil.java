@@ -1,4 +1,4 @@
-package top.nicelee.mirai.miramira.app.gif;
+package top.nicelee.mirai.miramira.app.txt2gif.libs.gif;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -14,8 +14,8 @@ import javax.imageio.metadata.IIOMetadata;
 import javax.imageio.metadata.IIOMetadataNode;
 import javax.imageio.stream.ImageInputStream;
 
-import top.nicelee.mirai.miramira.app.gif.bean.TextOption;
-import top.nicelee.mirai.miramira.app.gif.encoder.GIFEncoder;
+import top.nicelee.mirai.miramira.app.txt2gif.libs.gif.bean.TextOption;
+import top.nicelee.mirai.miramira.app.txt2gif.libs.gif.encoder.GIFEncoder;
 
 public class GifUtil {
 

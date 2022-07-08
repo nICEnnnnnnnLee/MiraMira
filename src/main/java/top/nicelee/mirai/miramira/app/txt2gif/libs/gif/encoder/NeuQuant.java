@@ -1,4 +1,4 @@
-package top.nicelee.mirai.miramira.app.gif.encoder;
+package top.nicelee.mirai.miramira.app.txt2gif.libs.gif.encoder;
 
 
 public class NeuQuant {

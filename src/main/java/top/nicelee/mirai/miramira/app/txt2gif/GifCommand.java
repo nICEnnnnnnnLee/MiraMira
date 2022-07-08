@@ -1,4 +1,4 @@
-package top.nicelee.mirai.miramira.command;
+package top.nicelee.mirai.miramira.app.txt2gif;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
@@ -11,8 +11,8 @@ import net.mamoe.mirai.console.permission.Permission;
 import top.nicelee.mirai.miramira.Main;
 import top.nicelee.mirai.miramira.RobotConfig;
 import top.nicelee.mirai.miramira.RobotConstant;
+import top.nicelee.mirai.miramira.command.ACommand;
 import top.nicelee.mirai.miramira.util.HttpRequestUtil;
-import top.nicelee.mirai.miramira.util.PermissionUil;
 
 /**
  *  /gif [on|off]					开关动图加台词功能
@@ -48,12 +48,8 @@ public final class GifCommand extends JCompositeCommand {
 	@SubCommand("help")
 	@Description("关闭动图加台词功能")
 	public void help(CommandSender sender) {
-		sender.sendMessage(
-				"/gif [on|off]  开关动图加台词功能\r\n" 
-				+ "/gif help  查询帮助\r\n"
-				+ "/gif list  查询当前存在的动图\r\n" 
-				+ "/gif [fetch|install|download]  下载动图\r\n"
-				+ "举例，如果/gif list查询到了 真香.gif,那么可以尝试发送\r\n" 
+		sender.sendMessage("/gif [on|off]  开关动图加台词功能\r\n" + "/gif help  查询帮助\r\n" + "/gif list  查询当前存在的动图\r\n"
+				+ "/gif [fetch|install|download]  下载动图\r\n" + "举例，如果/gif list查询到了 真香.gif,那么可以尝试发送\r\n"
 				+ "/gif 真香 台词1 台词2 台词3 台词4");
 	}
 
@@ -81,7 +77,6 @@ public final class GifCommand extends JCompositeCommand {
 		if (!gifFolder.exists()) {
 			gifFolder.mkdirs();
 		}
-//		https://butterandbutterfly.github.io/Q-Gif/pics/%E9%87%91%E9%A6%86%E9%95%BF%E6%96%97%E5%9B%BE/notext.gif
 
 		int success = 0, fail = 0;
 		StringBuilder tipsSucc = new StringBuilder(), tipsFail = new StringBuilder();
@@ -96,13 +91,6 @@ public final class GifCommand extends JCompositeCommand {
 					e.printStackTrace();
 				}
 				File tempFile = new File(gifFolder, gifType + ".gif.tmp");
-				HashMap<String, String> headers = new HashMap<>();
-				headers.put("Host", "butterandbutterfly.github.io");
-				headers.put("Accept-Language", "zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3");
-				headers.put("User-Agent",
-						"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:93.0) Gecko/20100101 Firefox/93.0");
-				headers.put("Accept",
-						"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8");
 				if (new HttpRequestUtil().download(url, tempFile, new HashMap<>())) {
 					if (tempFile.renameTo(gifFile)) {
 						tipsSucc.append(" - ").append(gifFile.getName()).append("\n");
@@ -114,8 +102,10 @@ public final class GifCommand extends JCompositeCommand {
 				fail++;
 			}
 		}
-		sender.sendMessage(String.format(
-				"gif 安装完毕, %d 个成功, %d 个失败\n安装成功：\n%s安装失败：\n%s\n请自行下载 https://butterandbutterfly.github.io/Q-Gif/pics/[失败gif名]/notext.gif",
-				success, fail, tipsSucc, tipsFail));
+		String tips = String.format("gif 安装完毕, %d 个成功, %d 个失败\n安装成功：\n%s安装失败：\n%s\n", success, fail, tipsSucc,
+				tipsFail);
+		if (fail > 0)
+			tips += "请自行下载 https://butterandbutterfly.github.io/Q-Gif/pics/[失败gif名]/notext.gif";
+		sender.sendMessage(tips);
 	}
 }

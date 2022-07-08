@@ -1,4 +1,4 @@
-package top.nicelee.mirai.miramira.app.gif;
+package top.nicelee.mirai.miramira.app.txt2gif.libs.gif;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -14,9 +14,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import top.nicelee.mirai.miramira.RobotConfig;
-import top.nicelee.mirai.miramira.app.gif.GifUtil;
-import top.nicelee.mirai.miramira.app.gif.ImgUtil;
-import top.nicelee.mirai.miramira.app.gif.bean.TextOption;
+import top.nicelee.mirai.miramira.app.txt2gif.libs.gif.GifUtil;
+import top.nicelee.mirai.miramira.app.txt2gif.libs.gif.ImgUtil;
+import top.nicelee.mirai.miramira.app.txt2gif.libs.gif.bean.TextOption;
 
 public class Gif {
 

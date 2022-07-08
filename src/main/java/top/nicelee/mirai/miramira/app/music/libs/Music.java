@@ -1,4 +1,4 @@
-package top.nicelee.mirai.miramira.app.music;
+package top.nicelee.mirai.miramira.app.music.libs;
 
 import net.mamoe.mirai.message.data.MusicKind;
 import net.mamoe.mirai.message.data.MusicShare;

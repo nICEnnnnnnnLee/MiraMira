@@ -1,4 +1,4 @@
-package top.nicelee.mirai.miramira.handler.normalmsg;
+package top.nicelee.mirai.miramira.app.txt2gif;
 
 import java.io.File;
 import java.io.PipedInputStream;
@@ -12,7 +12,8 @@ import net.mamoe.mirai.utils.ExternalResource;
 import top.nicelee.mirai.miramira.Main;
 import top.nicelee.mirai.miramira.RobotConfig;
 import top.nicelee.mirai.miramira.RobotConstant;
-import top.nicelee.mirai.miramira.app.gif.Gif;
+import top.nicelee.mirai.miramira.app.txt2gif.libs.gif.Gif;
+import top.nicelee.mirai.miramira.handler.normalmsg.ANormalMsgHandler;
 import top.nicelee.mirai.miramira.util.PermissionUil;
 
 /**
@@ -20,7 +21,7 @@ import top.nicelee.mirai.miramira.util.PermissionUil;
  * e.g. /gif 真香 第一句台词 第二句台词 第三句台词 ...
  */
 @ANormalMsgHandler
-public class GifQMsgHandler implements Consumer<MessageEvent> {
+public class GifNMsgHandler implements Consumer<MessageEvent> {
 
 	@Override
 	public void accept(MessageEvent f) {

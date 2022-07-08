@@ -1,4 +1,4 @@
-package top.nicelee.mirai.miramira.app.gif;
+package top.nicelee.mirai.miramira.app.txt2gif.libs.gif;
 
 import java.awt.Color;
 import java.awt.Font;

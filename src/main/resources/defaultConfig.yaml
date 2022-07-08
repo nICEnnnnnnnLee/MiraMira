@@ -1,5 +1,7 @@
 enableMusicFunc: true
+enableJrrpFunc: true
 enableFlash2NormalPicFunc: true
+enableTxt2GifFunc: true
 checkWhite: false
 checkBlack: true
 superadmins:

@@ -1,4 +1,4 @@
-package top.nicelee.mirai.miramira.handler.normalmsg;
+package top.nicelee.mirai.miramira.app;
 
 import java.util.function.Consumer;
 
@@ -7,13 +7,14 @@ import net.mamoe.mirai.console.command.CommandSender;
 import net.mamoe.mirai.event.events.MessageEvent;
 import top.nicelee.mirai.miramira.RobotConfig;
 import top.nicelee.mirai.miramira.RobotConstant;
+import top.nicelee.mirai.miramira.handler.normalmsg.ANormalMsgHandler;
 
 /**
- * 操作命令相关
+ * 将收到的QQ消息转化为 命令操作
  *
  */
 @ANormalMsgHandler
-public class CmdMsgHandler implements Consumer<MessageEvent> {
+public class CmdNMsgHandler implements Consumer<MessageEvent> {
 
 	@Override
 	public void accept(MessageEvent f) {

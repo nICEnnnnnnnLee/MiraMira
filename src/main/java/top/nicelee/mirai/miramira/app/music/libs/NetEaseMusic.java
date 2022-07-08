@@ -1,4 +1,4 @@
-package top.nicelee.mirai.miramira.app.music;
+package top.nicelee.mirai.miramira.app.music.libs;
 
 import java.util.ArrayList;
 import java.util.HashMap;

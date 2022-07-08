@@ -1,4 +1,4 @@
-package top.nicelee.mirai.miramira.handler.groupmsg;
+package top.nicelee.mirai.miramira.app.flash.pic.reply;
 
 import java.util.function.Consumer;
 
@@ -7,13 +7,14 @@ import net.mamoe.mirai.message.data.FlashImage;
 import net.mamoe.mirai.message.data.MessageChainBuilder;
 import net.mamoe.mirai.message.data.SingleMessage;
 import top.nicelee.mirai.miramira.RobotConfig;
+import top.nicelee.mirai.miramira.handler.groupmsg.AGroupMsgHandler;
 
 /**
  * 闪照 回复 正常照片
  *
  */
 @AGroupMsgHandler
-public class FlashMsgHandler implements Consumer<GroupMessageEvent> {
+public class FlashGMsgHandler implements Consumer<GroupMessageEvent> {
 
 	@Override
 	public void accept(GroupMessageEvent f) {
