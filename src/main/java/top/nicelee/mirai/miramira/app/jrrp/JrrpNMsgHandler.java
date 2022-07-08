@@ -1,4 +1,4 @@
-package top.nicelee.mirai.miramira.handler.normalmsg;
+package top.nicelee.mirai.miramira.app.jrrp;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -10,16 +10,20 @@ import net.mamoe.mirai.contact.User;
 import net.mamoe.mirai.event.events.MessageEvent;
 import net.mamoe.mirai.message.data.At;
 import net.mamoe.mirai.message.data.MessageChainBuilder;
+import top.nicelee.mirai.miramira.RobotConfig;
+import top.nicelee.mirai.miramira.handler.normalmsg.ANormalMsgHandler;
 
 /**
  * Jrrp命令相关
  *
  */
 @ANormalMsgHandler
-public class JrrpMsgHandler implements Consumer<MessageEvent> {
+public class JrrpNMsgHandler implements Consumer<MessageEvent> {
 
 	@Override
 	public void accept(MessageEvent f) {
+		if(!RobotConfig.enableJrrpFunc)
+			return;
 		String msg = f.getMessage().contentToString().toLowerCase();
 		if (msg.equals(".jrrp") || msg.equals("。jrrp")) {
 			User user = f.getSender();
@@ -30,7 +34,7 @@ public class JrrpMsgHandler implements Consumer<MessageEvent> {
 			MessageChainBuilder replyMsg = new MessageChainBuilder();
 			if (user instanceof Member)
 				replyMsg.append(new At(user.getId()));
-			replyMsg.add("你的jrrp为: " + jrrp);
+			replyMsg.add(" 你的jrrp为: " + jrrp);
 			f.getSubject().sendMessage(replyMsg.build());
 		}
 	}

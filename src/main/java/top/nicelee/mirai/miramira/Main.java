@@ -114,7 +114,7 @@ public class Main extends JavaPlugin {
 	 * @param msgEventCls
 	 */
 	private void Register(Reflections reflections, Class<? extends Annotation> handlerAnnotationCls,
-			EventChannel<Event> eventChannel, Class<? extends MessageEvent> msgEventCls) {
+			EventChannel<Event> eventChannel, Class<? extends Event> msgEventCls) {
 		Set<Class<?>> handlerClsSet = reflections.getTypesAnnotatedWith(handlerAnnotationCls);
 		Class<?>[] handlerClsMatrix = handlerClsSet.toArray(new Class<?>[handlerClsSet.size()]);
 		Arrays.sort(handlerClsMatrix, new Comparator<Class<?>>() {
@@ -136,7 +136,7 @@ public class Main extends JavaPlugin {
 			try {
 				Object obj = cls.getConstructor().newInstance();
 				if (obj instanceof Function) {
-					eventChannel.subscribe(msgEventCls, (Function<MessageEvent, ListeningStatus>) obj);
+					eventChannel.subscribe(msgEventCls, (Function<Event, ListeningStatus>) obj);
 				} else if (obj instanceof Consumer) {
 					eventChannel.subscribeAlways(msgEventCls, (Consumer) obj);
 				}
