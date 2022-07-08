@@ -36,6 +36,8 @@ public class RobotConfig {
 	public static boolean enableMusicFunc;
 	@Config(description="是否开启闪照变正常功能")
 	public static boolean enableFlash2NormalPicFunc=true;
+	@Config(description="是否开启动图添加文字功能")
+	public static boolean enableTxt2GifFunc=true;
 	@Config(description="是否开启白名单校验, 开启后只有在白名单里才能校验通过")
 	public static boolean checkWhite;
 	@Config(description="是否开启黑名单校验, 开启后只有不在黑名单里才能校验通过")
@@ -53,6 +55,7 @@ public class RobotConfig {
 		StringBuilder sb = new StringBuilder();
 		sb.append("enableMusicFunc: ").append(enableMusicFunc).append("\n");
 		sb.append("enableFlash2NormalPicFunc: ").append(enableMusicFunc).append("\n");
+		sb.append("enableTxt2GifFunc: ").append(enableTxt2GifFunc).append("\n");
 		sb.append("checkWhite: ").append(checkWhite).append("\n");
 		sb.append("checkBlack: ").append(checkBlack).append("\n");
 		sb.append("superadmins: ").append(superadmins).append("\n");

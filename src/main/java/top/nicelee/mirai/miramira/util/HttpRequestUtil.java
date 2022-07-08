@@ -2,10 +2,14 @@ package top.nicelee.mirai.miramira.util;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.io.Closeable;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.RandomAccessFile;
+import java.lang.reflect.Method;
 import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.net.CookiePolicy;
@@ -20,7 +24,6 @@ import java.util.Map;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.Inflater;
 import java.util.zip.InflaterInputStream;
-
 
 public class HttpRequestUtil {
 
@@ -53,8 +56,8 @@ public class HttpRequestUtil {
 		HttpURLConnection conn = (HttpURLConnection) realUrl.openConnection();
 		conn.setConnectTimeout(10000);
 		conn.setReadTimeout(10000);
-		
-		if(headers != null) {
+
+		if (headers != null) {
 			for (Map.Entry<String, String> entry : headers.entrySet()) {
 				conn.setRequestProperty(entry.getKey(), entry.getValue());
 //			 System.out.println(entry.getKey() + ":" + entry.getValue());
@@ -73,7 +76,7 @@ public class HttpRequestUtil {
 			// System.out.println(cookie);
 			conn.setRequestProperty("Cookie", cookie);
 		}
-		//conn.connect();
+		// conn.connect();
 		return conn;
 	}
 
@@ -95,17 +98,17 @@ public class HttpRequestUtil {
 		try {
 			HttpURLConnection conn = connect(headers, url, listCookie);
 			conn.connect();
-			
+
 			String encoding = conn.getContentEncoding();
 			InputStream ism = conn.getInputStream();
 			if (encoding != null && encoding.contains("gzip")) {// 首先判断服务器返回的数据是否支持gzip压缩，
 				// System.out.println(encoding);
 				// 如果支持则应该使用GZIPInputStream解压，否则会出现乱码无效数据
 				ism = new GZIPInputStream(ism);
-			}else if(encoding != null && encoding.contains("deflate")) {
+			} else if (encoding != null && encoding.contains("deflate")) {
 				ism = new InflaterInputStream(ism, new Inflater(true));
 			}
-			
+
 			in = new BufferedReader(new InputStreamReader(ism, "UTF-8"));
 			String line;
 			while ((line = in.readLine()) != null) {
@@ -160,7 +163,7 @@ public class HttpRequestUtil {
 			conn.setUseCaches(false); // 不允许缓存
 			conn.setRequestMethod("POST"); // 设置POST方式连接
 			conn.connect();
-			
+
 			// 建立输入流，向指向的URL传入参数
 			OutputStream dos = (conn.getOutputStream());
 			dos.write(param.getBytes());
@@ -195,9 +198,8 @@ public class HttpRequestUtil {
 				e2.printStackTrace();
 			}
 		}
-		
-	}
 
+	}
 
 	// 打印cookie信息
 	public static String printCookie(CookieStore cookieStore) {
@@ -223,4 +225,87 @@ public class HttpRequestUtil {
 		return sb.toString();
 	}
 
+	public boolean download(String url, File dstFile, HashMap<String, String> headers) {
+		InputStream inn = null;
+		RandomAccessFile raf = null;
+		try {
+			raf = new RandomAccessFile(dstFile, "rw");
+			// 获取下载进度
+			long offset = 0;
+			offset = modifyHeaderMapByDownloaded(headers, raf, dstFile, offset);
+			// 开始下载
+			HttpURLConnection conn = connect(headers, url, null);
+			conn.connect();
+
+			inn = conn.getInputStream();
+			byte[] buffer = new byte[1024];
+			int lenRead = inn.read(buffer);
+			while (lenRead > -1) {
+				raf.write(buffer, 0, lenRead);
+				lenRead = inn.read(buffer);
+			}
+			raf.close();
+			return true;
+		} catch (Exception e) {
+			System.out.println("发送GET请求出现异常！" + e);
+			e.printStackTrace();
+			return false;
+		} finally {
+			closeQuietly(inn);
+			closeQuietly(raf);
+		}
+	}
+
+	/**
+	 * 获取已经下载字节数，并修饰Header
+	 * 
+	 * @param headers
+	 * @param raf
+	 * @param fileDownloadPart
+	 * @param offset
+	 * @return
+	 * @throws IOException
+	 */
+	protected long modifyHeaderMapByDownloaded(HashMap<String, String> headers, RandomAccessFile raf,
+			File fileDownloadPart, long offset) throws IOException {
+		headers.remove("range");
+		if (fileDownloadPart.exists() && fileDownloadPart.length() > 0) {
+			offset = fileDownloadPart.length();
+			headers.put("range", "bytes=" + offset + "-");// + (total - 1)
+			raf.seek(offset);
+		}
+		return offset;
+	}
+
+	public static void close(Object resource) throws IOException, NoSuchMethodException, SecurityException {
+		if (resource == null)
+			return;
+		if (resource instanceof Closeable) {
+			((Closeable) resource).close();
+		} else {
+			System.err.println(resource.getClass().getName() + ": 尝试利用反射调用close()方法");
+			try {
+				Method method = resource.getClass().getDeclaredMethod("close");
+				try {
+					method.invoke(resource);
+				} catch (Exception e) {
+				}
+			} catch (NoSuchMethodException | SecurityException e1) {
+				Method method = resource.getClass().getMethod("close");
+				try {
+					method.invoke(resource);
+				} catch (Exception e) {
+				}
+			}
+		}
+	}
+
+	public static void closeQuietly(Object resource) {
+		try {
+			close(resource);
+		} catch (NoSuchMethodException | SecurityException | IOException e) {
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }
